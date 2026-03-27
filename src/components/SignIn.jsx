@@ -40,23 +40,7 @@ const initialValues = {
     password: ''
 }
 
-const SignIn = () => {
-    const [signIn] = useSignIn();
-    const navigate = useNavigate();
-
-    const onSubmit = async (values) => {
-        const {username, password} = values;
-
-        if(!formik.errors.username && !formik.errors.password)
-            try {
-            const { data } = await signIn({ username, password });
-            console.log(data);
-            navigate('/');
-            } catch (e) {
-            console.log(e);
-            }
-
-    };
+export const SignInContainer = ({onSubmit}) => {
 
     const validationSchema = yup.object().shape({
         username: yup
@@ -83,7 +67,7 @@ const SignIn = () => {
      {borderColor: formik.errors.password ? '#d73a4a' :'#8a939e'}
     ]
 
-  return (
+return (
     <>
         <View style={styles.formStyle}>
             <TextInput
@@ -117,6 +101,24 @@ const SignIn = () => {
         </View>
     </>
   );
+}
+
+const SignIn = () => {
+    const [signIn] = useSignIn();
+    const navigate = useNavigate();
+
+    const onSubmit = async (values) => {
+        const {username, password} = values;
+        try {
+            await signIn({ username, password });
+            navigate('/');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+
+  return <SignInContainer onSubmit={onSubmit}/>
 };
 
 export default SignIn;

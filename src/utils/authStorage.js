@@ -11,8 +11,6 @@ class AuthStorage {
   }
 
   async setAccessToken(accessToken) {
-    // eslint-disable-next-line no-undef
-    console.log(accessToken)
     await AsyncStorage.setItem(`${this.namespace}:token`, JSON.stringify(accessToken));
   }
 
